@@ -1,0 +1,26 @@
+[
+    {
+        "model": "adminpage.tabel_admin",
+        "pk": 1,
+        "fields":{
+            "password": "0192023a7bbd73250516f069df18b500",
+            "username": "admin",
+            "first_name": "Admin",
+            "last_name": "admin"
+        }
+    },
+    {
+        "model": "adminpage.tahun_ajaran",
+        "pk": 1,
+        "fields":{
+            "tahun": "2018"
+        }
+    },
+    {
+        "model": "adminpage.tahun_ajaran_aktif",
+        "pk": 1,
+        "fields":{
+            "tahun_aktif": 1
+        }
+    }
+]

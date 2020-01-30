@@ -1,0 +1,119 @@
+{% extends 'html/base.html' %}
+
+{%block judul%}Lihat Soal{%endblock%}
+
+{% block konten %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="form-row">
+                        <div class="col-12">
+                            <h3 class="card-title">Tahun Ajaran</h3>
+                        </div>
+                        <div class="col-10">
+                            <form method="POST" name="thn_ajaran" id="thn_ajaran">
+                                {%csrf_token%}
+                                <input type="hidden" name="ganti" id="ajaran">
+                                <select class="form-control" onchange="gantiTahunAjaran(this.value)">
+                                    <option>Pilih Tahun Ajaran</option>
+                                    {% for tahun in tahun_ajaran%}
+                                    <option value="{{tahun}}">{{tahun.thn}}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </div>
+                        <div class="col-2">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-primary float-right" value="Tambah Soal"
+                                    name="tambah">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-dark">
+                <p class="card-title text-center">Jumlah Soal : {{kumpulan_soal|length}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for soal in kumpulan_soal%}
+        <div class="col-6">
+            <div class="card card-success card-outline">
+                <div class="card-header">
+                    <h5 class="card-title m-0">Soal No {{forloop.counter}}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{soal.soal}}</p>
+                    <p class="card-text"><u>Pilihan :</u></p>
+                    <p class="card-text">A. {{soal.pilihan_1}}</p>
+                    <p class="card-text">B. {{soal.pilihan_2}}</p>
+                    <p class="card-text">C. {{soal.pilihan_3}}</p>
+                    <p class="card-text">D. {{soal.pilihan_4}}</p>
+                    <p class="card-text">E. {{soal.pilihan_5}}</p>
+                    <p class="card-text"><u>Jawaban :</u></p>
+                    <p class="card-text"><u>{{soal.jawaban}}</u></p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-danger float-right ml-1"
+                        onclick="hapusSoal('{{soal.kode_soal}}')">Hapus</button>
+                    <a href="{% url 'adminPage:edit_soal' soal.kode_matpel soal.kode_soal%}" class="btn btn-success float-right">Edit</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="modal fade" id="dialogHapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menghapus Soal ini ?
+                </div>
+                <div class="modal-footer">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="kode_soal" name="kode_soal">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        <input type="submit" class="btn btn-danger" value="hapus" name="hapus">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkTheBox(id) {
+            row = document.getElementById(id)
+            row.checked = true;
+        }
+        function gantiTahunAjaran(tahun) {
+            myForm = document.getElementById('thn_ajaran')
+            ajaran = document.getElementById('ajaran')
+            ajaran.value = tahun
+            myForm.submit()
+        }
+        function hapusSoal(kodeSoal) {
+            soal = document.getElementById('kode_soal');
+            soal.value = kodeSoal;
+            $('#dialogHapus').modal('show');
+        }
+    </script>
+    {% endblock %}

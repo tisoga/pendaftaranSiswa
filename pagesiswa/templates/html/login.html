@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+{%load static%}
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ArsSchool | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css'%}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'css/adminlte/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>Ars</b>School</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      {% include 'html/messages.html'%}
+      <div class="col-12">
+        <div class="form-row mt-2 mb-2">
+          <div class="col-4 offset-2">
+            <input type="radio" id='siswa' name="kls" onclick="showHideDiv()" checked>Login Siswa
+          </div>
+          <div class="col-6">
+            <input type="radio" id='admin' name="kls" onclick="showHideDiv()">Login Admin
+          </div>
+        </div>
+      </div>
+      <div class="card-body login-card-body" id="divsiswa" style="display: block;">
+        <p class="login-box-msg">Login untuk Siswa</p>
+        <!-- {% include 'html/messages.html'%} -->
+        <form method="POST">
+          {% csrf_token %}
+          <!-- {% csrf_token %} -->
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" name="nis" placeholder="NIS">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <a href="/register/" class="text-decoration-none">Belum Punya Akun? Daftar Disini!</a>
+            </div>
+            <div class="offset-8 col-4">
+              <button type="submit" class="btn btn-primary btn-block" name="siswa" value="siswa">Login</button>
+            </div>
+          </div>
+          <!-- /.col -->
+
+          <!-- /.col -->
+      </div>
+      </form>
+
+      <div class="card-body login-card-body" id='divadmin' style="display: none;">
+        <p class="login-box-msg">Login untuk Admin Page</p>
+        <!-- {% include 'html/messages.html'%} -->
+
+        <form method="POST" id="edit">
+          {% csrf_token %}
+          <!-- {% csrf_token %} -->
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" name="username" placeholder="Username">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+          </div>
+          <!-- /.col -->
+          <div class="offset-8 col-4">
+            <button type="submit" class="btn btn-primary btn-block" name="admin" value="admin">Login</button>
+          </div>
+          <!-- /.col -->
+      </div>
+      </form>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
+
+  <div class="modal fade" id="suksesDaftar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Pendaftaran Berhasil</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3>Silahkan Catat NIS Anda!</h3>
+          <h4><b>NIS : {{nis}}<br></b></h4>
+          <p>Silahkan Login Menggunakan NIS anda,</p>
+          <p>untuk Password gunakan tanggal lahir dengan format: </p>
+          <p>"<b>TAHUN-BULAN-TANGGAL</b>"</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+  <script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'js/adminlte/adminlte.js'%}"></script>
+  {% if nis%}
+  <script type="text/javascript">
+    $('#suksesDaftar').modal({ backdrop: 'static', keyboard: false });
+  </script>
+  {% endif %}
+
+  <script type="text/javascript">
+    function showHideDiv() {
+      divSiswa = document.getElementById('divsiswa');
+      divAdmin = document.getElementById('divadmin');
+      radioSiswa = document.getElementById('siswa');
+      radioAdmin = document.getElementById('admin');
+      if (radioSiswa.checked === true) {
+        divSiswa.style.display = 'block';
+        divAdmin.style.display = 'none';
+      }
+      else if (radioAdmin.checked === true) {
+        divAdmin.style.display = 'block';
+        divSiswa.style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+
+</html>

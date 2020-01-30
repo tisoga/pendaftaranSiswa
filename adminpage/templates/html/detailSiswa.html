@@ -1,0 +1,116 @@
+{% extends 'html/base.html' %}
+
+{%block judul%}Detail Siswa{%endblock%}
+
+{% block konten %}
+<div class="container">
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <center>
+                        <table border="1">
+                            <tr style="height: 200px">
+                                <td colspan="2" class="text-center">
+                                    <img src="/media/{{data.foto}}" width='50%' height='100%'>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-center">Data Sekolah</th>
+                            </tr>
+                            <tr>
+                                <th>Nomor Induk Siswa</th>
+                                <td>{{data.nis}}</td>
+                            </tr>
+                            <tr>
+                                <th>Kelas</th>
+                                <td>{{data.kelas}}</td>
+                            </tr>
+                            <tr>
+                                <th>Tahun Ajaran</th>
+                                <td>{{data.tahun_ajaran}}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-center">Data Siswa</th>
+                            </tr>
+                            <tr>
+                                <th>Nama</th>
+                                <td>{{data.nama}}</td>
+                            </tr>
+                            <tr>
+                                <th>Jenis Kelamin</th>
+                                <td>{{data.jenis_kelamin}}</td>
+                            </tr>
+                            <tr>
+                                <th style="width: 150px;">Alamat</th>
+                                <td style="width: 200px;">{{data.alamat}}</td>
+                            </tr>
+                            <tr>
+                                <th>Tempat Lahir</th>
+                                <td>{{data.tempat_lahir}}</td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Lahir</th>
+                                <td>{{data.tanggal_lahir}}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-center">Nilai</th>
+                            </tr>
+                            <tr>
+                                <th>Matematika</th>
+                                <td>{{data.nilai_mtk}}</td>
+                            </tr>
+                            <tr>
+                                <th>Bhs. Indonesia</th>
+                                <td>{{data.nilai_indonesia}}</td>
+                            </tr>
+                            <tr>
+                                <th>Bhs. Inggris</th>
+                                <td>{{data.nilai_inggris}}</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-dark">Rata-Rata</th>
+                                <th class="bg-dark">{{data.rata}}</th>
+                            </tr>
+                            <tr>
+                                <form method="POST" id="dataSiswa">
+                                    {% csrf_token %}
+                                    <td colspan="2">
+                                        <input type="submit" class="btn btn-success form-control" name="edit"
+                                            value="EDIT">
+                                        <button class="btn btn-danger form-control mt-1" type="button" data-toggle="modal"
+                                            data-target="#dialogHapus" form="dataSiswa" name="hapus"
+                                            value="hapus">HAPUS</button>
+                                    </td>
+                                </form>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dialogHapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus Siswa {{data.nama}} ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <button class="btn btn-danger" form="dataSiswa" name="hapus" value="hapus">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'html/base.html '%}
+
+{%block judul%}List Siswa{%endblock%}
+
+{% block konten %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="form-row">
+                        <div class="col-12">
+                            <h3 class="card-title">Tahun Ajaran</h3>
+                            <form method="POST" name="thn_ajaran" id="thn_ajaran">
+                                {%csrf_token%}
+                                <input type="hidden" name="ganti" id="ajaran">
+                                <select class="form-control" onchange="gantiTahunAjaran(this.value)">
+                                    <option>Pilih Tahun Ajaran</option>
+                                    {% for tahun in tahun%}
+                                    <option value="{{tahun}}">{{tahun.thn}}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for kelas in semua%}
+        <div class="col-sm-12 col-md-6 mt-2">
+            {% if kelas.namaKelas == 'Belum Mendapatkan kelas'%}
+            <div class="card card-dark">
+            {% else %}
+            <div class="card card-primary">
+            {% endif %}
+                <div class="card-header">
+                    <h3 class="text-center">{{kelas.namaKelas}}</h3>
+                </div>
+                <div class="row ml-1 " style="width: 99%;">
+                    <div class="col-4 bg-warning">
+                        <p class="text-center pt-3">Jumlah Siswa : {{kelas.jumlah}}</p>
+                    </div>
+                    <div class="col-4 bg-success">
+                        <p class="text-center pt-3">Laki-Laki : {{kelas.laki}}</p>
+                    </div>
+                    <div class="col-4 bg-info">
+                        <p class="text-center pt-3">Perempuan : {{kelas.perempuan}}</p>
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0" style="height: 350px; overflow-y: auto;">
+                    <table class="table table-hover">
+                        <form id='dataSiswa' method="POST">
+                            {% csrf_token %}
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class='text-center align-middle'>NIS</th>
+                                    <th class='text-center align-middle'>Nama</th>
+                                    <th class='text-center align-middle'>Nilai Rata-Rata</th>
+                                    <th class='text-center align-middle'>Jenis Kelamin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for siswa in kelas.siswa %}
+                                {% url 'adminPage:detail' siswa.nis as url %}
+                                <tr onclick="location.href='{{url}}'" style="cursor: pointer">
+                                    <td class='text-center align-middle'>{{siswa.nis}}</td>
+                                    <td class='text-center align-middle'>{{siswa.nama}}</td>
+                                    <td class='text-center align-middle'>{{siswa.rata}}</td>
+                                    <td class='text-center align-middle'>{{siswa.jenis_kelamin}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </form>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+</div>
+
+    <script>
+        function checkTheBox(id) {
+            row = document.getElementById(id)
+            row.checked = true;
+        }
+        function gantiTahunAjaran(tahun) {
+            myForm = document.getElementById('thn_ajaran')
+            ajaran = document.getElementById('ajaran')
+            ajaran.value = tahun
+            myForm.submit()
+        }
+    </script>
+    {% endblock %}

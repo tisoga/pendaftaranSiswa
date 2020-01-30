@@ -1,0 +1,171 @@
+{% extends 'html/base.html' %}
+
+{%block judul%}Penentuan Kelas{%endblock%}
+
+{% block konten %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="form-row">
+                        <div class="col-12">
+                            <h3 class="card-title">Tahun Ajaran</h3>
+                            <form method="POST" name="thn_ajaran" id="thn_ajaran">
+                                {%csrf_token%}
+                                <input type="hidden" name="ganti" id="ajaran">
+                                <select class="form-control" onchange="gantiTahunAjaran(this.value)">
+                                    <option>Pilih Tahun Ajaran</option>
+                                    {% for tahun in tahun_ajaran%}
+                                    <option value="{{tahun}}">{{tahun.thn}}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-row mt-2 mb-2">
+                                <div class="col-2">
+                                    <h3 class="card-title">Penentuan Kelas : </h3>
+                                </div>
+                                <!-- <div class="col-2">
+                                    <input type="radio" id='kelas' name="kls" onclick="showHideDiv()">Berdasarkan Kelas
+                                </div>
+                                <div>
+                                    <input type="radio" id='siswa' name="kls" onclick="showHideDiv()">Berdasarkan Siswa
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-6" id="divkelas" style="display: none;">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="col-12">
+                                    <div class="form-row bg-primary border border-primary rounded">
+                                        <div class="col-6 pt-2">
+                                            <label>Jumlah Kelas : </label>
+                                        </div>
+                                        <div class="col-6 pt-1">
+                                            <input type="number" name="jumlah_kelas" class="form-control" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-6 " id="divsiswa" style="display: block;">
+                            <div class="col-12">
+                                <div class="form-row border rounded bg-primary">
+                                    <div class="col-9 pt-2">
+                                        <label>Maksimal Jumlah siswa Perkelas : </label>
+                                    </div>
+                                    <div class="col-3 pt-1">
+                                        <input type="number" name="jumlah_siswa" class="form-control" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 " id="divpembagian" style="display: block;">
+                            <div class="col-12">
+                                <div class="form-row border rounded bg-dark">
+                                    <div class="col-5 pt-2">
+                                        <label>Kriteria pembagian : </label>
+                                    </div>
+                                    <div class="col-7 pt-1">
+                                        <input type="hidden" name="penentuan" id="penentuan" value="siswa">
+                                        <input type="radio" name="kriteria" value="nilai">
+                                        Nilai Rata-rata Tertinggi
+                                        <br>
+                                        <input type="radio" name="kriteria" value="jk">Jenis Kelamin
+                                        <br>
+                                        <input type="radio" name="kriteria" value="acak">Acak
+                                        <br>
+                                        <input type="submit" class="btn btn-primary" value="Mulai Penentuan Kelas">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover">
+                        <form id='dataSiswa' method="POST">
+                            {% csrf_token %}
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center align-middle">No</th>
+                                    <th class="text-center align-middle">NIS</th>
+                                    <th class="text-center align-middle">Nama</th>
+                                    <th class="text-center align-middle">Jenis Kelamin</th>
+                                    <th class="text-center align-middle">Tanggal Lahir</th>
+                                    <th class="text-center align-middle">Nilai rata-rata</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for siswa in list_siswa %}
+                                <tr>
+                                    <td class="text-center align-middle">{{forloop.counter}}</td>
+                                    <td class="text-center align-middle">{{siswa.nis}}</td>
+                                    <td class="text-center align-middle">{{siswa.nama}}</td>
+                                    <td class="text-center align-middle">{{siswa.jenis_kelamin}}</td>
+                                    <td class="text-center align-middle">{{siswa.tanggal_lahir}}</td>
+                                    <td class="text-center align-middle">{{siswa.rata}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </form>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dialogHapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus siswa ini ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <button class="btn btn-danger" form="dataSiswa" name="hapus" value="hapus">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showHideDiv() {
+        divSiswa = document.getElementById('divsiswa');
+        divKelas = document.getElementById('divkelas');
+        divPembagian = document.getElementById('divpembagian');
+        penentuan = document.getElementById('penentuan')
+        radioSiswa = document.getElementById('siswa');
+        radioKelas = document.getElementById('kelas');
+        if (radioSiswa.checked === true) {
+            divSiswa.style.display = 'block';
+            divPembagian.style.display = 'block';
+            divKelas.style.display = 'none';
+            penentuan.value = 'siswa';
+        }
+        else if (radioKelas.checked === true) {
+            divKelas.style.display = 'block';
+            divPembagian.style.display = 'block';
+            divSiswa.style.display = 'none';
+            penentuan.value = 'kelas';
+        }
+    }
+    function gantiTahunAjaran(tahun) {
+        myForm = document.getElementById('thn_ajaran')
+        ajaran = document.getElementById('ajaran')
+        ajaran.value = tahun
+        myForm.submit()
+    }
+</script>
+{% endblock %}

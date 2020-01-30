@@ -1,0 +1,103 @@
+{% extends 'html/base.html' %}
+
+{%block judul%}Edit Soal{%endblock%}
+
+{% block konten %}
+<div class="container-fluid">
+    <!-- <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <p class="card-title text-center bg-dark">Jumlah Soal : {{kumpulan_soal|length}}</p>
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <form method="POST">
+                    {% csrf_token %}
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="col-2 align-middle text-center">Pertanyaan</th>
+                            <td class="col-10" colspan="2">
+                                <textarea class="form-control" name="pertanyaan" required>{{kumpulan_soal.soal}}</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-2 align-middle text-center">Pilihan 1</th>
+                            <td class="col-10">
+                                <input type="text" class="form-control" name="pilihan_1" value="{{kumpulan_soal.pilihan_1}}" 
+                                required>
+                            </td>
+                            <td>
+                                <input type="radio" class="form-control" id="jawaban" name="jawaban" value="1" required 
+                                    oninvalid="document.getElementById('jawaban').setCustomValidity('Pilih salah satu Jawaban Yang Benar untuk pertanyaan ini')"
+                                    onclick="document.getElementById('jawaban').setCustomValidity('')"
+                                    {% if kumpulan_soal.jawaban == kumpulan_soal.pilihan_1%} checked {% endif %}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-2 align-middle text-center">Pilihan 2</th>
+                            <td class="col-10">
+                                <input type="text" class="form-control" name="pilihan_2" value="{{kumpulan_soal.pilihan_2}}" 
+                                required>
+                            </td>
+                            <td>
+                                <input type="radio" class="form-control" id="jawaban" name="jawaban" value="2" required
+                                    oninvalid="document.getElementById('jawaban').setCustomValidity('Pilih salah satu Jawaban Yang Benar untuk pertanyaan ini')"
+                                    onclick="document.getElementById('jawaban').setCustomValidity('')"
+                                    {% if kumpulan_soal.jawaban == kumpulan_soal.pilihan_2%} checked {% endif %}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-2 align-middle text-center">Pilihan 3</th>
+                            <td class="col-10">
+                                <input type="text" class="form-control" name="pilihan_3" value="{{kumpulan_soal.pilihan_3}}" 
+                                required>
+                            </td>
+                            <td>
+                                <input type="radio" class="form-control" id="jawaban" name="jawaban" value="3" required
+                                    oninvalid="document.getElementById('jawaban').setCustomValidity('Pilih salah satu Jawaban Yang Benar untuk pertanyaan ini')"
+                                    onclick="document.getElementById('jawaban').setCustomValidity('')"
+                                    {% if kumpulan_soal.jawaban == kumpulan_soal.pilihan_3%} checked {% endif %}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-2 align-middle text-center">Pilihan 4</th>
+                            <td class="col-10">
+                                <input type="text" class="form-control" name="pilihan_4" value="{{kumpulan_soal.pilihan_4}}" 
+                                required>
+                            </td>
+                            <td>
+                                <input type="radio" class="form-control" id="jawaban" name="jawaban" value="4" required
+                                    oninvalid="document.getElementById('jawaban').setCustomValidity('Pilih salah satu Jawaban Yang Benar untuk pertanyaan ini')"
+                                    onclick="document.getElementById('jawaban').setCustomValidity('')"
+                                    {% if kumpulan_soal.jawaban == kumpulan_soal.pilihan_4%} checked {% endif %}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-2 align-middle text-center">Pilihan 5</th>
+                            <td class="col-10">
+                                <input type="text" class="form-control" name="pilihan_5" value="{{kumpulan_soal.pilihan_5}}" 
+                                required>
+                            </td>
+                            <td>
+                                <input type="radio" class="form-control" id="jawaban" name="jawaban" value="5" required
+                                    oninvalid="document.getElementById('jawaban').setCustomValidity('Pilih salah satu Jawaban Yang Benar untuk pertanyaan ini')"
+                                    onclick="document.getElementById('jawaban').setCustomValidity('')"
+                                    {% if kumpulan_soal.jawaban == kumpulan_soal.pilihan_5%} checked {% endif %}>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <input type="submit" class="btn btn-success float-right ml-2" name="save"
+                                    value="Simpan">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

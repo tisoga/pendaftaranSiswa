@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% load static %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Ars School | Pendaftaraan Siswa</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css'%}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'css/adminlte/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+
+</head>
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <a href="#"><b>Ars</b>School</a>
+  </div>
+
+  <div class="card">
+    <div class="card-body register-card-body">
+      <!-- <?php include 'alert.php' ?>
+      <?php 
+        if ($is_active == 1 ){ 
+      ?> -->
+      {% if tahun_ajaran.is_active == 1%}
+      <div id="close_pendaftaran">
+        <h1 class="text-center">Pendaftaran untuk tahun ajaran {{tahun_ajaran.tahun_aktif.tahun}} Telah Ditutup Silahkan tunggu tahun Ajaran baru untuk mendaftar ke <b>Ars School</b></h1>
+      </div>
+      {% else %}
+    <!-- <?php } 
+        elseif ($is_active == 0){
+    ?> -->
+      <div id="open_pendaftaran">
+          <p class="login-box-msg"><b>Pendaftaran Siswa untuk Tahun Ajaran {{tahun_ajaran.tahun_aktif.tahun}}</b></p>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <!-- <input type="hidden" name="tahun" value="<?php echo"$tahun_aktif_id"?> -->
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Nama Lengkap" name="nama">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <textarea class="form-control" placeholder="Alamat Lengkap" name="alamat"></textarea>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-home"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Tempat Lahir" name="tempat">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-home"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control datetimepicker-input" id="datetimepicker5"data-toggle="datetimepicker" data-target="#datetimepicker5" name="tanggal" placeholder="Tanggal Lahir" />
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-birthday-cake"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <label>Jenis Kelamin : </label>
+            <input type="radio" name="jk" style="margin-left: 20px;" value="Laki-Laki" required>Laki-Laki
+            <input type="radio" name="jk" style="margin-left: 20px;" value="Perempuan" required>Perempuan
+          </div>
+          <label>Foto</label>
+          <div class="input-group mb-3">
+            <input type="file" class="form-control" name="foto">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-portrait"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <a href="/login/" class="text-center">Saya Sudah Mempunyai Akun</a>
+            </div>
+            <!-- /.col -->
+            <div class="offset-8 col-4">
+              <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js'%}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'js/adminlte/adminlte.js'%}"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <!-- <script src="{% static 'js/adminlte/pages/dashboard.js'%}"></script> -->
+    <!-- AdminLTE for demo purposes -->
+    <script src="{% static 'js/adminlte/demo.js'%}"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker5').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+        });
+    </script>
+</body>
+
+</html>

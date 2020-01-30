@@ -1,0 +1,106 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="../../index3.html" class="brand-link">
+        <img src="https://i.postimg.cc/qqfG9SZm/Admin-LTELogo.png" alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">ARS School</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="https://i.postimg.cc/05fqkXR8/user2-160x160.jpg" class="img-circle elevation-2"
+                    alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">{{name}}</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item has-treeview">
+                    <a href="{% url 'adminPage:homepage'%}" class="nav-link {%if active == 'beranda'%}active{%endif%}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Beranda</p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview {%if active == 'semua' or active == 'kelas'%}menu-open{%endif%}">
+                    <a href="#" class="nav-link {%if active == 'semua' or active == 'kelas'%}active{%endif%}">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            List Siswa
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'adminPage:semua_siswa'%}" class="nav-link {%if active == 'semua'%}active{%endif%}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Semua Siswa</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'adminPage:siswa_kelas'%}" class="nav-link {%if active == 'kelas'%}active{%endif%}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Berdasarkan Kelas</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="{% url 'adminPage:penentuan'%}" class="nav-link {%if active == 'penentuan'%}active{%endif%}">
+                        <i class="nav-icon fas fa-clipboard"></i>
+                        <p>Penentuan Kelas Otomatis</p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="{% url 'adminPage:tambah'%}" class="nav-link {%if active == 'tambah'%}active{%endif%}">
+                        <i class="nav-icon fas fa-user-plus"></i>
+                        <p>Tambah Siswa</p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="{% url 'adminPage:register'%}" class="nav-link {%if active == 'register'%}active{%endif%}">
+                        <i class="nav-icon fas fa-user-shield"></i>
+                        <p>Tambah Admin</p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="{% url 'adminPage:pilih_soal'%}" class="nav-link {%if active == 'pilih_soal'%}active{%endif%}">
+                        <i class="nav-icon fas fa-pen"></i>
+                        <p>Soal Test</p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview {%if active == 'set_tahun' or active == 'tambah_tahun'%}menu-open{%endif%}">
+                    <a href="#" class="nav-link {%if active == 'set_tahun' or active == 'tambah_tahun'%}active{%endif%}">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>
+                            Tahun Ajaran
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'adminPage:set_tahun'%}" class="nav-link {%if active == 'set_tahun'%}active{%endif%}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Setting Tahun Ajaran</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'adminPage:tambah_tahun'%}" class="nav-link {%if active == 'tambah_tahun'%}active{%endif%}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tahun Ajaran Baru</p>
+                            </a>
+                        </li>
+                        </ul>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,24 @@
+{% extends 'html/base.html' %}
+
+{% block judul %} Tahun Ajaran Baru {% endblock %}
+
+{% block konten %}
+<div class="container">
+    <br>
+    <div class="row justify-content-center">
+        <div class="form-group bg-danger col-6">
+            <form method="POST">
+                {%csrf_token%}
+                <div class="form-group">
+                    <label>Masukan Tahun Ajaran Baru</label>
+                    <input type="number" class="form-control" name="tahun_baru" placeholder="Masukan Tahun Ajaran Baru"
+                        required>
+                    <div class="form-group row mt-2">
+                        <input type="submit" class="form-control btn btn-warning col" value="Tambah">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

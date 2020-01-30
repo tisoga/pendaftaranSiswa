@@ -1,0 +1,53 @@
+{% extends 'html/base.html' %}
+
+{%block judul%}Tambah Soal{%endblock%}
+
+{% block konten %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <p class="card-title text-center bg-dark">Jumlah Soal : {{kumpulan_soal|length}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <form method="POST">
+                    {% csrf_token %}
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="col-2 align-middle text-center">Pertanyaan</th>
+                            <td class="col-10" colspan="2">
+                                <textarea class="form-control" name="pertanyaan" required></textarea>
+                            </td>
+                        </tr>
+                        {% for x in '12345'%}
+                        <tr>
+                            <th class="col-2 align-middle text-center">Pilihan {{x}}</th>
+                            <td class="col-10">
+                                <input type="text" class="form-control" name="pilihan_{{x}}" required>
+                            </td>
+                            <td>
+                                <input type="radio" class="form-control" id="jawaban" name="jawaban" value="{{x}}" required
+                                    oninvalid="document.getElementById('jawaban').setCustomValidity('Pilih salah satu Jawaban Yang Benar untuk pertanyaan ini')"
+                                    onclick="document.getElementById('jawaban').setCustomValidity('')">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3">
+                                <input type="submit" class="btn btn-success float-right ml-2" name="selesai"
+                                    value="Save & Selesai">
+                                <input type="submit" class="btn btn-primary float-right" name="next"
+                                    value="Save & Soal Baru">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

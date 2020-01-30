@@ -1,0 +1,59 @@
+{% extends 'html/base.html' %}
+
+{%block judul%}Tambah Siswa{%endblock%}
+
+{% block konten %}
+<div class="container">
+    <br>
+    <div class="row justify-content-center">
+        <div class="form-group bg-success col-6">
+            <form method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="form-group">
+                    <!-- <label>NIS</label>
+                    <input type="text" class="form-control" name="nis" placeholder="Masukan Nomor induk Siswa" required> -->
+                    <label>Nama Siswa</label>
+                    <input type="text" class="form-control" name="nama" placeholder="Masukan Nama Siswa" required>
+                    <label class="">Jenis Kelamin : </label>
+                    <input type="radio" name="jk" style="margin-left: 10px;" value="Laki-Laki" required>Laki-Laki
+                    <input type="radio" name="jk" style="margin-left: 10px;" value="Perempuan" required>Perempuan
+                    <br>
+                    <!-- <label>Password</label>
+                    <input type="password" class="form-control" name="pass" placeholder="Buat Password"> -->
+                    <label>Alamat Lengkap</label>
+                    <textarea placeholder="Masukan Alamat Lengkap" class="form-control" name="alamat"
+                        required></textarea>
+                    <label>Tempat Lahir</label>
+                    <input type="text" class="form-control" name="tempat" placeholder="Masukan Tempat Lahir" required>
+                    <label>Tanggal Lahir</label>
+                    <input type="text" class="form-control datetimepicker-input" id="datetimepicker5"
+                        data-toggle="datetimepicker" data-target="#datetimepicker5" name="tanggal" />
+                    <label>Nilai Matematika</label>
+                    <input type="number" class="form-control" name="mtk" placeholder="Masukan Nilai Matematika"
+                        required>
+                    <label>Nilai Indonesia</label>
+                    <input type="number" class="form-control" name="indo" placeholder="Masukan Nilai Bhs.Indonesia"
+                        required>
+                    <label>Nilai Inggris</label>
+                    <input type="number" class="form-control" name="inggris" placeholder="Masukan Nilai bhs.Inggris"
+                        required>
+                    <!-- <div class="form-group row mt-2">
+                        <label class="col-sm-12 col-5 pt-2">Tahun Ajaran</label>
+                        <select class="form-control col-sm-12 col-5" name="tahun">
+                            {% for tahun in tahun %}
+                            <option value="{{tahun}}">{{tahun.thn}}</option>
+                            {% endfor %}
+                        </select>
+                    </div> -->
+                    <label>Foto</label>
+                    <input type="file" class="form-control bg-success mb-4" name="foto" required>
+                    <div class="form-group row">
+                        <input type="reset" class="form-control btn btn-danger col" value="Reset">
+                        <input type="submit" class="form-control btn btn-primary col" value="Tambah">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
